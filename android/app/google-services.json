@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "201219973439",
+    "project_id": "charify-328c3",
+    "storage_bucket": "charify-328c3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:201219973439:android:f417efcfaeed6f28e1f38a",
+        "android_client_info": {
+          "package_name": "com.example.charify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "201219973439-2n65gedr2r8vloivb8sn21c5b9g48ilr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6BzU4gZKnr15vXQDKTlolAorsgtsgzcs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "201219973439-2n65gedr2r8vloivb8sn21c5b9g48ilr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "201219973439-1baajafb4lqfv33b0hd662vsh030h2hj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.charify"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:201219973439:android:88bf4ba418b8eafce1f38a",
+        "android_client_info": {
+          "package_name": "com.nabilmersni_charify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "201219973439-2n65gedr2r8vloivb8sn21c5b9g48ilr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6BzU4gZKnr15vXQDKTlolAorsgtsgzcs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "201219973439-2n65gedr2r8vloivb8sn21c5b9g48ilr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "201219973439-1baajafb4lqfv33b0hd662vsh030h2hj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.charify"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
