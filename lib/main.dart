@@ -1,33 +1,27 @@
+import 'package:charify/core/di/get_it.dart';
+import 'package:charify/core/router/app_router.dart';
+import 'package:charify/core/theme/app_theme.dart';
+import 'package:charify/features/auth/presentation/bloc/user_bloc.dart';
 import 'package:charify/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  setup();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Charify',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+  runApp(
+    BlocProvider(
+      create: (context) => getIt<UserBloc>(),
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        routerConfig: AppRouter.router,
+        theme: AppTheme.getTheme(),
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("hello"),
-        ),
-      ),
-    );
-  }
+    ),
+  );
 }

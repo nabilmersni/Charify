@@ -18,28 +18,31 @@ class DefaultButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
-            backgroundColor: WidgetStateProperty.resolveWith(
-              (states) {
-                if (states.contains(WidgetState.disabled)) {
-                  return bgColor?.withOpacity(0.5);
-                }
-                return bgColor;
-              },
+    return SizedBox(
+      width: double.maxFinite,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
+              backgroundColor: WidgetStateProperty.resolveWith(
+                (states) {
+                  if (states.contains(WidgetState.disabled)) {
+                    return bgColor?.withOpacity(0.5);
+                  }
+                  return bgColor;
+                },
+              ),
+              foregroundColor: WidgetStateProperty.resolveWith(
+                (states) {
+                  if (states.contains(WidgetState.disabled)) {
+                    return textColor?.withOpacity(0.5);
+                  }
+                  return textColor;
+                },
+              ),
+              padding: WidgetStatePropertyAll(padding),
             ),
-            foregroundColor: WidgetStateProperty.resolveWith(
-              (states) {
-                if (states.contains(WidgetState.disabled)) {
-                  return textColor?.withOpacity(0.5);
-                }
-                return textColor;
-              },
-            ),
-            padding: WidgetStatePropertyAll(padding),
-          ),
-      child: Text(text ?? ""),
+        child: Text(text ?? ""),
+      ),
     );
   }
 }
