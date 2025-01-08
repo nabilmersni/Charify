@@ -2,9 +2,11 @@ import 'package:charify/core/ui/widgets/default_button.dart';
 import 'package:charify/features/auth/presentation/bloc/user_bloc.dart';
 import 'package:charify/features/auth/presentation/bloc/user_event.dart';
 import 'package:charify/features/auth/presentation/bloc/user_state.dart';
+import 'package:charify/features/main/presentation/page/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 class AuthPage extends StatelessWidget {
   static const String path = "/auth";
@@ -23,6 +25,9 @@ class AuthPage extends StatelessWidget {
                     content: Text(state.errorMessage ?? "Error occured"),
                   ),
                 );
+              }
+              if (state.status == UserStatus.success) {
+                context.go(MainPage.path);
               }
             },
             builder: (context, state) {
