@@ -43,4 +43,14 @@ class AuthRepositoryImpl implements AuthRepository {
           value: AuthFailure(errorMessage: e.response?.data['message']));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> logout() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      return Right(value: null);
+    } catch (e) {
+      return Left(value: AuthFailure(errorMessage: "Logout failure"));
+    }
+  }
 }

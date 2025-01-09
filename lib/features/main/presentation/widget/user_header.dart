@@ -1,6 +1,7 @@
 import 'package:charify/core/theme/app_colors.dart';
 import 'package:charify/core/ui/widgets/default_button.dart';
 import 'package:charify/features/auth/presentation/bloc/user_bloc.dart';
+import 'package:charify/features/auth/presentation/bloc/user_event.dart';
 import 'package:charify/features/auth/presentation/bloc/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,7 +27,9 @@ class UserHeader extends StatelessWidget {
                       ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.read<UserBloc>().add(LogoutEvent());
+                  },
                   icon: const Icon(Icons.logout),
                   color: AppColors.surface,
                 )

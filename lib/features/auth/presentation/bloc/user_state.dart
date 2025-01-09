@@ -5,6 +5,7 @@ enum UserStatus {
   loading,
   success,
   error,
+  logout,
 }
 
 class UserState {
