@@ -18,7 +18,7 @@ class TokenInterceptor extends Interceptor {
       if (user != null) {
         String? token = await user.getIdToken();
         if (token != null) {
-          options.headers['Authoriszation'] = 'Bearer $token';
+          options.headers['Authorization'] = 'Bearer $token';
         }
       }
       handler.next(options);

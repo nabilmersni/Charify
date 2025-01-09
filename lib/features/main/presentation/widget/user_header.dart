@@ -1,0 +1,65 @@
+import 'package:charify/core/theme/app_colors.dart';
+import 'package:charify/core/ui/widgets/default_button.dart';
+import 'package:charify/features/auth/presentation/bloc/user_bloc.dart';
+import 'package:charify/features/auth/presentation/bloc/user_state.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class UserHeader extends StatelessWidget {
+  const UserHeader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, state) {
+        final user = state.userEntity;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Hello, ${user?.displayName}',
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        color: AppColors.surface,
+                      ),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.logout),
+                  color: AppColors.surface,
+                )
+              ],
+            ),
+            Text(
+              "Projects supported: ${user?.projectsSupported ?? 0}",
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: AppColors.surface,
+                  ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              "You've donated: ${user?.totalDonated ?? 0}\$",
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: AppColors.surface,
+                  ),
+            ),
+            const SizedBox(height: 8),
+            SizedBox(
+              width: 120,
+              child: DefaultButton(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                text: "History",
+                bgColor: AppColors.secondary,
+                onPressed: () {},
+                textColor: AppColors.text,
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}

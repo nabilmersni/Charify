@@ -12,6 +12,8 @@ class ApiClient {
       dio.interceptors.add(TokenInterceptor(dio: dio));
     }
 
+    // dio.options.connectTimeout = const Duration(seconds: 10);
+
     dio.interceptors.add(
       PrettyDioLogger(
         request: true,

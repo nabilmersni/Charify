@@ -14,10 +14,13 @@ class UserRepositoryImpl implements UserRepository {
   Future<Either<Failure, UserEntity>> getUser() async {
     try {
       final user = await userRemoteDatasource.getUser();
+
       return Right(value: user);
     } on DioException catch (e) {
       return Left(
-        value: AuthFailure(errorMessage: e.response?.data['message']),
+        value: AuthFailure(
+            errorMessage:
+                e.response?.data['message'] ?? 'Unexpected error occurred'),
       );
     }
   }
