@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'application_entity.g.dart';
@@ -8,7 +9,7 @@ enum ApplicationStatus {
 }
 
 @JsonSerializable()
-class ApplicationEntity {
+class ApplicationEntity extends Equatable {
   @JsonKey(name: "_id")
   final String id;
   final String title;
@@ -23,7 +24,7 @@ class ApplicationEntity {
   final List<String> images;
   final DateTime deadline;
 
-  ApplicationEntity({
+  const ApplicationEntity({
     required this.id,
     required this.title,
     required this.status,
@@ -40,4 +41,19 @@ class ApplicationEntity {
   Map<String, dynamic> toJson() => _$ApplicationEntityToJson(this);
   factory ApplicationEntity.fromJson(Map<String, dynamic> json) =>
       _$ApplicationEntityFromJson(json);
+
+  @override
+  List<Object?> get props => [
+        id,
+        title,
+        status,
+        description,
+        amount,
+        collectedPercentage,
+        collectedAmount,
+        donorCount,
+        urgent,
+        images,
+        deadline,
+      ];
 }

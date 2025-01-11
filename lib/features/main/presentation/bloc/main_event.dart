@@ -22,8 +22,8 @@ class SetIsUrgentFilterEvent extends MainEvent {
   SetIsUrgentFilterEvent({required this.isUrgent});
 }
 
-class SetISearchFilterEvent extends MainEvent {
+class SetSearchFilterEvent extends MainEvent {
   final String search;
 
-  SetISearchFilterEvent({required this.search});
+  SetSearchFilterEvent({required this.search});
 }

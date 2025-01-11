@@ -5,6 +5,8 @@ import 'package:charify/features/auth/presentation/bloc/user_bloc.dart';
 import 'package:charify/features/auth/presentation/bloc/user_event.dart';
 import 'package:charify/features/auth/presentation/bloc/user_state.dart';
 import 'package:charify/features/auth/presentation/page/auth_page.dart';
+import 'package:charify/features/main/presentation/bloc/main_bloc.dart';
+import 'package:charify/features/main/presentation/bloc/main_event.dart';
 import 'package:charify/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +20,15 @@ void main() async {
   setup();
 
   runApp(
-    BlocProvider(
-      create: (context) => getIt<UserBloc>()..add(GetUserEvent()),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt<UserBloc>()..add(GetUserEvent()),
+        ),
+        BlocProvider(
+          create: (context) => getIt<MainBloc>()..add(GetCategoriesEvent()),
+        ),
+      ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         routerConfig: AppRouter.router,

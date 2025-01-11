@@ -1,4 +1,5 @@
 import 'package:charify/core/theme/app_colors.dart';
+import 'package:charify/features/main/presentation/widget/filters_controls.dart';
 import 'package:charify/features/main/presentation/widget/user_header.dart';
 import 'package:flutter/material.dart';
 
@@ -30,6 +31,17 @@ class MainPage extends StatelessWidget {
                         borderRadius: BorderRadius.vertical(
                           top: Radius.circular(20),
                         ),
+                      ),
+                      child: const Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 16,
+                            ),
+                            child: FiltersControls(),
+                          ),
+                        ],
                       ),
                     ),
                   ),

@@ -14,6 +14,8 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   }) : super(MainState.initial()) {
     on<GetCategoriesEvent>(onGetCategoriesEvent);
     on<LoadApplicationsEvent>(onLoadApplicationsEvent);
+    on<ToggleFilterByCategoryEvent>(onToggleFilterByCategoryEvent);
+    on<SetSearchFilterEvent>(onSetSearchFilterEvent);
   }
 
   void onGetCategoriesEvent(
@@ -108,5 +110,25 @@ class MainBloc extends Bloc<MainEvent, MainState> {
             applicationsPage: state.applicationsPage + 1));
       });
     }
+  }
+
+  void onToggleFilterByCategoryEvent(
+      ToggleFilterByCategoryEvent event, Emitter<MainState> emit) {
+    if (state.filterByCategory == event.categoryEntity) {
+      emit(state.copyWith(nullifyFilterByCategory: true));
+    } else {
+      emit(state.copyWith(filterByCategory: event.categoryEntity));
+    }
+    add(LoadApplicationsEvent(refresh: true));
+  }
+
+  void onSetIsUrgentFilterEvent(
+      SetIsUrgentFilterEvent event, Emitter<MainState> emit) {
+    emit(state.copyWith(isUrgentFilter: event.isUrgent));
+  }
+
+  void onSetSearchFilterEvent(
+      SetSearchFilterEvent event, Emitter<MainState> emit) {
+    emit(state.copyWith(searchFilter: event.search));
   }
 }
