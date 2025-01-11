@@ -1,0 +1,112 @@
+import 'package:charify/features/main/domain/repository/application_repository.dart';
+import 'package:charify/features/main/domain/repository/category_repository.dart';
+import 'package:charify/features/main/presentation/bloc/main_event.dart';
+import 'package:charify/features/main/presentation/bloc/main_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class MainBloc extends Bloc<MainEvent, MainState> {
+  final ApplicationRepository applicationRepository;
+  final CategoryRepository categoryRepository;
+
+  MainBloc({
+    required this.applicationRepository,
+    required this.categoryRepository,
+  }) : super(MainState.initial()) {
+    on<GetCategoriesEvent>(onGetCategoriesEvent);
+    on<LoadApplicationsEvent>(onLoadApplicationsEvent);
+  }
+
+  void onGetCategoriesEvent(
+      GetCategoriesEvent event, Emitter<MainState> emit) async {
+    emit(state.copyWith(status: MainStatus.loading));
+    final result = await categoryRepository.getCategories();
+
+    result.fold(
+      (l) => emit(
+        state.copyWith(status: MainStatus.error, errorMessage: l.errorMessage),
+      ),
+      (r) => emit(
+        state.copyWith(
+          status: MainStatus.successfullyFetchCategories,
+          categories: r,
+        ),
+      ),
+    );
+  }
+
+  void onLoadApplicationsEvent(
+      LoadApplicationsEvent event, Emitter<MainState> emit) async {
+    if (state.categories?.isEmpty ??
+        false || state.status == MainStatus.loading) {
+      return;
+    }
+    emit(state.copyWith(status: MainStatus.loading));
+
+    if (event.refresh) {
+      emit(state.copyWith(
+        applicationsByCategory: {},
+        lastApplications: [],
+        applicationsPage: 1,
+        categoryPage: 1,
+      ));
+    }
+
+    if (state.isUrgentFilter ||
+        state.filterByCategory != null ||
+        (state.searchFilter?.isNotEmpty ?? false)) {
+      var result = await applicationRepository.getApplications(
+          search: state.searchFilter,
+          categoryId: state.filterByCategory?.id,
+          urgent: state.isUrgentFilter,
+          page: state.applicationsPage);
+      result.fold((l) {
+        emit(state.copyWith(
+            status: MainStatus.error, errorMessage: l.errorMessage));
+      }, (r) {
+        emit(state.copyWith(
+            status: MainStatus.successfullyFetchApplications,
+            lastApplications: [...state.lastApplications ?? [], ...r],
+            applicationsPage: state.applicationsPage + 1));
+      });
+    } else {
+      for (int i = 0; i < 3; i++) {
+        if (state.categoryPage - 1 >= state.categories!.length) {
+          break;
+        }
+        var result = await applicationRepository.getApplications(
+          categoryId: state.categories![state.categoryPage - 1].id,
+          limit: 2,
+          page: 1,
+        );
+        result.fold((l) {}, (r) {
+          if (r.isNotEmpty) {
+            emit(state.copyWith(
+                status: MainStatus.successfullyFetchApplications,
+                applicationsByCategory: {
+                  ...state.applicationsByCategory ?? {},
+                  state.categories![state.categoryPage - 1]: r,
+                },
+                categoryPage: state.categoryPage + 1));
+          } else {
+            emit(state.copyWith(
+              status: MainStatus.successfullyFetchApplications,
+              categoryPage: state.categoryPage + 1,
+            ));
+          }
+        });
+      }
+
+      var result = await applicationRepository.getApplications(
+          page: state.applicationsPage);
+      result.fold((l) {
+        emit(state.copyWith(
+            status: MainStatus.error, errorMessage: l.errorMessage));
+      }, (r) {
+        emit(state.copyWith(
+            status: MainStatus.successfullyFetchApplications,
+            lastApplications: [...state.lastApplications ?? [], ...r],
+            applicationsPage: state.applicationsPage + 1));
+      });
+    }
+  }
+}

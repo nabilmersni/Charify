@@ -7,3 +7,11 @@ abstract class Failure {
 class AuthFailure extends Failure {
   AuthFailure({required super.errorMessage});
 }
+
+class CategoryFailure extends Failure {
+  CategoryFailure({required super.errorMessage});
+}
+
+class ApplicationFailure extends Failure {
+  ApplicationFailure({required super.errorMessage});
+}

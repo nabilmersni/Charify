@@ -6,7 +6,6 @@ import 'package:charify/features/auth/presentation/bloc/user_event.dart';
 import 'package:charify/features/auth/presentation/bloc/user_state.dart';
 import 'package:charify/features/auth/presentation/page/auth_page.dart';
 import 'package:charify/firebase_options.dart';
-import 'package:charify/splash_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

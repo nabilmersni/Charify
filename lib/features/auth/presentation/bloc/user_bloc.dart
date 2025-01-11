@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:charify/features/auth/domain/repository/auth_repository.dart';
 import 'package:charify/features/auth/domain/repository/user_repository.dart';
 import 'package:charify/features/auth/presentation/bloc/user_event.dart';
