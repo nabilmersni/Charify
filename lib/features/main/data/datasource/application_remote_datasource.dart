@@ -29,4 +29,9 @@ class ApplicationRemoteDatasource {
         .map((e) => ApplicationEntity.fromJson(e))
         .toList();
   }
+
+  Future<ApplicationEntity> getApplication(String applicationId) async {
+    final request = await dio.get('applications/$applicationId');
+    return ApplicationEntity.fromJson(request.data);
+  }
 }

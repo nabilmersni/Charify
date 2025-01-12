@@ -10,4 +10,7 @@ abstract class ApplicationRepository {
     bool? urgent,
     String? search,
   });
+
+  Future<Either<Failure, ApplicationEntity>> getApplicationById(
+      String applicationId);
 }

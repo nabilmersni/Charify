@@ -1,5 +1,6 @@
 import 'package:charify/features/auth/presentation/page/auth_page.dart';
 import 'package:charify/features/main/presentation/page/main_page.dart';
+import 'package:charify/features/main/presentation/page/single_application_page.dart';
 import 'package:charify/splash_page.dart';
 import 'package:go_router/go_router.dart';
 
@@ -25,6 +26,13 @@ class AppRouter {
           return const MainPage();
         },
       ),
+      GoRoute(
+        path: '/application/:id',
+        builder: (context, state) {
+          return SingleApplicationPage(
+              applicationId: state.pathParameters['id'] ?? '');
+        },
+      )
     ],
   );
 }

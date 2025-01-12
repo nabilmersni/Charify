@@ -35,4 +35,21 @@ class ApplicationRepositoryImpl implements ApplicationRepository {
       );
     }
   }
+
+  @override
+  Future<Either<Failure, ApplicationEntity>> getApplicationById(
+      String applicationId) async {
+    try {
+      final application =
+          await applicationRemoteDatasource.getApplication(applicationId);
+
+      return Right(value: application);
+    } on DioException catch (e) {
+      return Left(
+        value: ApplicationFailure(
+          errorMessage: e.response?.data['message'] ?? "An error occured",
+        ),
+      );
+    }
+  }
 }

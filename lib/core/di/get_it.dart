@@ -13,6 +13,7 @@ import 'package:charify/features/main/data/repository/category_repository_impl.d
 import 'package:charify/features/main/domain/repository/application_repository.dart';
 import 'package:charify/features/main/domain/repository/category_repository.dart';
 import 'package:charify/features/main/presentation/bloc/main_bloc.dart';
+import 'package:charify/features/main/presentation/bloc/single_application_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -78,5 +79,9 @@ void registerBloc() {
       applicationRepository: getIt(),
       categoryRepository: getIt(),
     ),
+  );
+
+  getIt.registerFactory(
+    () => SingleApplicationBloc(applicationRepository: getIt()),
   );
 }

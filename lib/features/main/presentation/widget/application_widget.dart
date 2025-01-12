@@ -3,8 +3,10 @@ import 'package:charify/core/theme/app_colors.dart';
 import 'package:charify/core/utils/date_utils.dart';
 import 'package:charify/core/utils/url_utils.dart';
 import 'package:charify/features/main/domain/entity/application_entity.dart';
+import 'package:charify/features/main/presentation/page/single_application_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ApplicationWidget extends StatelessWidget {
   final ApplicationEntity applicationEntity;
@@ -20,7 +22,13 @@ class ApplicationWidget extends StatelessWidget {
     return Material(
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          if (onTap != null) {
+            onTap?.call(applicationEntity);
+          } else {
+            context.push(SingleApplicationPage.path(applicationEntity.id));
+          }
+        },
         borderRadius: BorderRadius.circular(16),
         child: Column(
           children: [

@@ -18,7 +18,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
@@ -31,7 +31,6 @@ class _MainPageState extends State<MainPage> {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
       context.read<MainBloc>().add(LoadApplicationsEvent());
-      print("endddddddddddddddddddd");
     }
   }
 
