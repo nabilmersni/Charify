@@ -15,6 +15,7 @@ class DefaultTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onChanged: onChange,
       style: Theme.of(context).textTheme.bodyMedium,
       decoration: InputDecoration(
         filled: true,

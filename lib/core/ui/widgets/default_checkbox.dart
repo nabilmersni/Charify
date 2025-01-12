@@ -20,11 +20,11 @@ class DefaultCheckbox extends StatelessWidget {
           onChanged.call(value);
         },
         borderRadius: BorderRadius.circular(8),
-        child: Container(
+        child: SizedBox(
           width: 32,
           height: 32,
           child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 100),
+            duration: const Duration(milliseconds: 150),
             transitionBuilder: (child, animation) => ScaleTransition(
               scale: animation,
               child: child,

@@ -19,7 +19,7 @@ class ApplicationRemoteDatasource {
       queryParameters: {
         'page': page,
         'limit': limit,
-        'categoryId': categoryId,
+        'category': categoryId,
         'urgent': urgent,
         'search': search,
       }.withoutNulls(),

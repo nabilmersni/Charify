@@ -47,6 +47,7 @@ dependencies:
   intl:
   flutter_stripe:
   dots_indicator:
+  rxdart:
 
 dev_dependencies:
   flutter_test:

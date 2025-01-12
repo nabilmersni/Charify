@@ -11,7 +11,7 @@ class LoadApplicationsEvent extends MainEvent {
 }
 
 class ToggleFilterByCategoryEvent extends MainEvent {
-  CategoryEntity categoryEntity;
+  CategoryEntity? categoryEntity;
 
   ToggleFilterByCategoryEvent({required this.categoryEntity});
 }
@@ -27,3 +27,5 @@ class SetSearchFilterEvent extends MainEvent {
 
   SetSearchFilterEvent({required this.search});
 }
+
+class ClearFiltersEvent extends MainEvent {}

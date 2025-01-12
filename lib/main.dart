@@ -6,7 +6,6 @@ import 'package:charify/features/auth/presentation/bloc/user_event.dart';
 import 'package:charify/features/auth/presentation/bloc/user_state.dart';
 import 'package:charify/features/auth/presentation/page/auth_page.dart';
 import 'package:charify/features/main/presentation/bloc/main_bloc.dart';
-import 'package:charify/features/main/presentation/bloc/main_event.dart';
 import 'package:charify/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +25,7 @@ void main() async {
           create: (context) => getIt<UserBloc>()..add(GetUserEvent()),
         ),
         BlocProvider(
-          create: (context) => getIt<MainBloc>()..add(GetCategoriesEvent()),
+          create: (context) => getIt<MainBloc>(),
         ),
       ],
       child: MaterialApp.router(

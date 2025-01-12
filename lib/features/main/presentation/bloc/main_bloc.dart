@@ -3,6 +3,7 @@ import 'package:charify/features/main/domain/repository/category_repository.dart
 import 'package:charify/features/main/presentation/bloc/main_event.dart';
 import 'package:charify/features/main/presentation/bloc/main_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rxdart/rxdart.dart';
 
 class MainBloc extends Bloc<MainEvent, MainState> {
   final ApplicationRepository applicationRepository;
@@ -15,7 +16,16 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     on<GetCategoriesEvent>(onGetCategoriesEvent);
     on<LoadApplicationsEvent>(onLoadApplicationsEvent);
     on<ToggleFilterByCategoryEvent>(onToggleFilterByCategoryEvent);
-    on<SetSearchFilterEvent>(onSetSearchFilterEvent);
+    on<SetSearchFilterEvent>(
+      onSetSearchFilterEvent,
+      transformer: (events, mapper) {
+        return events
+            .debounceTime(const Duration(milliseconds: 500))
+            .flatMap(mapper);
+      },
+    );
+    on<SetIsUrgentFilterEvent>(onSetIsUrgentFilterEvent);
+    on<ClearFiltersEvent>(onClearFiltersEvent);
   }
 
   void onGetCategoriesEvent(
@@ -100,15 +110,18 @@ class MainBloc extends Bloc<MainEvent, MainState> {
 
       var result = await applicationRepository.getApplications(
           page: state.applicationsPage);
-      result.fold((l) {
-        emit(state.copyWith(
-            status: MainStatus.error, errorMessage: l.errorMessage));
-      }, (r) {
-        emit(state.copyWith(
-            status: MainStatus.successfullyFetchApplications,
-            lastApplications: [...state.lastApplications ?? [], ...r],
-            applicationsPage: state.applicationsPage + 1));
-      });
+      result.fold(
+        (l) {
+          emit(state.copyWith(
+              status: MainStatus.error, errorMessage: l.errorMessage));
+        },
+        (r) {
+          emit(state.copyWith(
+              status: MainStatus.successfullyFetchApplications,
+              lastApplications: [...state.lastApplications ?? [], ...r],
+              applicationsPage: state.applicationsPage + 1));
+        },
+      );
     }
   }
 
@@ -125,10 +138,22 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   void onSetIsUrgentFilterEvent(
       SetIsUrgentFilterEvent event, Emitter<MainState> emit) {
     emit(state.copyWith(isUrgentFilter: event.isUrgent));
+    add(LoadApplicationsEvent(refresh: true));
   }
 
   void onSetSearchFilterEvent(
       SetSearchFilterEvent event, Emitter<MainState> emit) {
     emit(state.copyWith(searchFilter: event.search));
+    add(LoadApplicationsEvent(refresh: true));
+  }
+
+  void onClearFiltersEvent(ClearFiltersEvent event, Emitter<MainState> emit) {
+    emit(state.copyWith(
+      // searchFilter: '',
+      // filterByCategory: null,
+      isUrgentFilter: false,
+      nullifyFilterByCategory: true,
+    ));
+    add(LoadApplicationsEvent(refresh: true));
   }
 }
