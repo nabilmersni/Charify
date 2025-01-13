@@ -8,6 +8,7 @@ import 'package:charify/core/utils/url_utils.dart';
 import 'package:charify/features/main/presentation/bloc/single_application_bloc.dart';
 import 'package:charify/features/main/presentation/bloc/single_application_event.dart';
 import 'package:charify/features/main/presentation/bloc/single_application_state.dart';
+import 'package:charify/features/main/presentation/page/payment_page.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -145,7 +146,10 @@ class _SingleApplicationPageState extends State<SingleApplicationPage> {
                                       color: AppColors.primary,
                                       backgroundColor: AppColors.onSurface,
                                       borderRadius: BorderRadius.circular(20),
-                                      value: application?.collectedPercentage,
+                                      value:
+                                          (application?.collectedPercentage ??
+                                                  0) /
+                                              100,
                                     ),
                                     const SizedBox(height: 8),
                                     Row(
@@ -201,10 +205,25 @@ class _SingleApplicationPageState extends State<SingleApplicationPage> {
                             const SizedBox(height: 12),
                             DefaultButton(
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 95,
+                                horizontal: 20,
                                 vertical: 12,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                context
+                                    .push(
+                                  PaymentPage.path(widget.applicationId),
+                                )
+                                    .then(
+                                  (v) {
+                                    // ignore: use_build_context_synchronously
+                                    context.read<SingleApplicationBloc>().add(
+                                          GetSingleApplicationEvent(
+                                            applicationId: widget.applicationId,
+                                          ),
+                                        );
+                                  },
+                                );
+                              },
                               text: "Donate",
                               // textColor: AppColors.text,
                             ),

@@ -8,23 +8,34 @@ import 'package:charify/features/auth/domain/repository/user_repository.dart';
 import 'package:charify/features/auth/presentation/bloc/user_bloc.dart';
 import 'package:charify/features/main/data/datasource/application_remote_datasource.dart';
 import 'package:charify/features/main/data/datasource/category_remote_datasource.dart';
+import 'package:charify/features/main/data/datasource/payment_remote_datasource.dart';
 import 'package:charify/features/main/data/repository/application_repository_impl.dart';
 import 'package:charify/features/main/data/repository/category_repository_impl.dart';
+import 'package:charify/features/main/data/repository/payment_repository_impl.dart';
 import 'package:charify/features/main/domain/repository/application_repository.dart';
 import 'package:charify/features/main/domain/repository/category_repository.dart';
+import 'package:charify/features/main/domain/repository/payment_repository.dart';
 import 'package:charify/features/main/presentation/bloc/main_bloc.dart';
+import 'package:charify/features/main/presentation/bloc/payment_bloc.dart';
 import 'package:charify/features/main/presentation/bloc/single_application_bloc.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 var getIt = GetIt.instance;
 
 void setup() {
+  initStripe();
   registerGoogleSignIn();
   registerApiClient();
   registerDataSources();
   registerRepositories();
   registerBloc();
+}
+
+void initStripe() {
+  Stripe.publishableKey =
+      "pk_test_51PwkQYByUCYEdTTeHgaaK94Mg2sVX5ojR6b2SvbnXuTzsgGco1kHN6Cti1hHSXwPwsm3okECqmJVTd6fhI4X1RMF00ohFnDL4z";
 }
 
 void registerGoogleSignIn() {
@@ -44,6 +55,8 @@ void registerDataSources() {
   getIt.registerSingleton(CategoryRemoteDatasource(dio: dioTokenInterceptor));
   getIt
       .registerSingleton(ApplicationRemoteDatasource(dio: dioTokenInterceptor));
+
+  getIt.registerSingleton(PaymentRemoteDatasource(dio: dioTokenInterceptor));
 }
 
 void registerRepositories() {
@@ -64,6 +77,10 @@ void registerRepositories() {
   getIt.registerSingleton<ApplicationRepository>(
     ApplicationRepositoryImpl(applicationRemoteDatasource: getIt()),
   );
+
+  getIt.registerSingleton<PaymentRepository>(
+    PaymentRepositoryImpl(paymentRemoteDatasource: getIt()),
+  );
 }
 
 void registerBloc() {
@@ -83,5 +100,9 @@ void registerBloc() {
 
   getIt.registerFactory(
     () => SingleApplicationBloc(applicationRepository: getIt()),
+  );
+
+  getIt.registerFactory(
+    () => PaymentBloc(paymentRepository: getIt()),
   );
 }

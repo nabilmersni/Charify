@@ -15,3 +15,7 @@ class CategoryFailure extends Failure {
 class ApplicationFailure extends Failure {
   ApplicationFailure({required super.errorMessage});
 }
+
+class PaymentFailure extends Failure {
+  PaymentFailure({required super.errorMessage});
+}

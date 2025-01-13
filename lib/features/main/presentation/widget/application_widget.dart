@@ -109,7 +109,7 @@ class ApplicationWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   LinearProgressIndicator(
-                    value: applicationEntity.collectedPercentage,
+                    value: (applicationEntity.collectedPercentage ?? 0) / 100,
                     borderRadius: BorderRadius.circular(50),
                     color: AppColors.primary,
                     backgroundColor: AppColors.onSurface,
