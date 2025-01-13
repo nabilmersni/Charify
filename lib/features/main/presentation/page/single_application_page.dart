@@ -14,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 class SingleApplicationPage extends StatefulWidget {
   static String path(String id) => '/application/$id';
@@ -95,6 +96,7 @@ class _SingleApplicationPageState extends State<SingleApplicationPage> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 10),
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
                                       mainAxisAlignment:
@@ -180,6 +182,63 @@ class _SingleApplicationPageState extends State<SingleApplicationPage> {
                                         ),
                                       ],
                                     ),
+                                    if (application?.userDonations.isNotEmpty ??
+                                        false)
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const SizedBox(height: 12),
+                                          Text(
+                                            "My Donations",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineSmall,
+                                          ),
+                                          const SizedBox(height: 8),
+                                          ListView.separated(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            shrinkWrap: true,
+                                            itemCount: application
+                                                    ?.userDonations.length ??
+                                                0,
+                                            separatorBuilder:
+                                                (BuildContext context,
+                                                        int index) =>
+                                                    const SizedBox(height: 12),
+                                            itemBuilder: (context, index) {
+                                              final donation = application
+                                                  ?.userDonations[index];
+
+                                              return Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    DateFormat('dd MMM, yyy')
+                                                        .format(
+                                                      donation?.date ??
+                                                          DateTime.now(),
+                                                    ),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium
+                                                        ?.copyWith(
+                                                          color: AppColors.text
+                                                              .withOpacity(0.8),
+                                                        ),
+                                                  ),
+                                                  Text(
+                                                      '\$${donation?.amount.toStringAsFixed(2)}'),
+                                                ],
+                                              );
+                                            },
+                                          ),
+                                          const SizedBox(height: 120),
+                                        ],
+                                      ),
                                   ],
                                 ),
                               ),

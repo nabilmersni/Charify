@@ -22,6 +22,10 @@ ApplicationEntity _$ApplicationEntityFromJson(Map<String, dynamic> json) =>
               .toList() ??
           [],
       deadline: DateTime.parse(json['deadline'] as String),
+      userDonations: (json['userDonations'] as List<dynamic>?)
+              ?.map((e) => DonationEntity.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
     );
 
 Map<String, dynamic> _$ApplicationEntityToJson(ApplicationEntity instance) =>

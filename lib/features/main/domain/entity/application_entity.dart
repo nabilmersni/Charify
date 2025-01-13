@@ -1,3 +1,4 @@
+import 'package:charify/features/main/domain/entity/donation_entity.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -23,6 +24,8 @@ class ApplicationEntity extends Equatable {
   @JsonKey(defaultValue: [])
   final List<String> images;
   final DateTime deadline;
+  @JsonKey(defaultValue: [])
+  final List<DonationEntity> userDonations;
 
   const ApplicationEntity({
     required this.id,
@@ -36,6 +39,7 @@ class ApplicationEntity extends Equatable {
     required this.urgent,
     required this.images,
     required this.deadline,
+    required this.userDonations,
   });
 
   Map<String, dynamic> toJson() => _$ApplicationEntityToJson(this);
