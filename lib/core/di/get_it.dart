@@ -6,6 +6,10 @@ import 'package:charify/features/auth/data/repository/user_repository_impl.dart'
 import 'package:charify/features/auth/domain/repository/auth_repository.dart';
 import 'package:charify/features/auth/domain/repository/user_repository.dart';
 import 'package:charify/features/auth/presentation/bloc/user_bloc.dart';
+import 'package:charify/features/history/data/datasource/history_remote_datasource.dart';
+import 'package:charify/features/history/data/repository/history_repository_impl.dart';
+import 'package:charify/features/history/domain/repository/history_repository.dart';
+import 'package:charify/features/history/presentation/bloc/history_bloc.dart';
 import 'package:charify/features/main/data/datasource/application_remote_datasource.dart';
 import 'package:charify/features/main/data/datasource/category_remote_datasource.dart';
 import 'package:charify/features/main/data/datasource/payment_remote_datasource.dart';
@@ -57,6 +61,7 @@ void registerDataSources() {
       .registerSingleton(ApplicationRemoteDatasource(dio: dioTokenInterceptor));
 
   getIt.registerSingleton(PaymentRemoteDatasource(dio: dioTokenInterceptor));
+  getIt.registerSingleton(HistoryRemoteDatasource(dio: dioTokenInterceptor));
 }
 
 void registerRepositories() {
@@ -81,6 +86,10 @@ void registerRepositories() {
   getIt.registerSingleton<PaymentRepository>(
     PaymentRepositoryImpl(paymentRemoteDatasource: getIt()),
   );
+
+  getIt.registerSingleton<HistoryRepository>(
+    HistoryRepositoryImpl(historyRemoteDatasource: getIt()),
+  );
 }
 
 void registerBloc() {
@@ -104,5 +113,9 @@ void registerBloc() {
 
   getIt.registerFactory(
     () => PaymentBloc(paymentRepository: getIt()),
+  );
+
+  getIt.registerFactory(
+    () => HistoryBloc(historyRepository: getIt()),
   );
 }

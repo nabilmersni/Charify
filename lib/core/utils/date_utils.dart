@@ -14,4 +14,10 @@ extension DateUtils on DateTime {
 
     return "${difference.inDays} ${difference.inDays == 1 ? "day" : "days"} left";
   }
+
+  bool isSameDate(DateTime otherDate) {
+    return year == otherDate.year &&
+        month == otherDate.month &&
+        day == otherDate.day;
+  }
 }

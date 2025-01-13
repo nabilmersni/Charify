@@ -3,8 +3,10 @@ import 'package:charify/core/ui/widgets/default_button.dart';
 import 'package:charify/features/auth/presentation/bloc/user_bloc.dart';
 import 'package:charify/features/auth/presentation/bloc/user_event.dart';
 import 'package:charify/features/auth/presentation/bloc/user_state.dart';
+import 'package:charify/features/history/presentation/page/history_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class UserHeader extends StatelessWidget {
   const UserHeader({super.key});
@@ -56,7 +58,9 @@ class UserHeader extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 text: "History",
                 bgColor: AppColors.secondary,
-                onPressed: () {},
+                onPressed: () {
+                  context.push(HistoryPage.path);
+                },
                 textColor: AppColors.text,
               ),
             ),

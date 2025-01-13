@@ -1,4 +1,5 @@
 import 'package:charify/features/auth/presentation/page/auth_page.dart';
+import 'package:charify/features/history/presentation/page/history_page.dart';
 import 'package:charify/features/main/presentation/page/main_page.dart';
 import 'package:charify/features/main/presentation/page/payment_page.dart';
 import 'package:charify/features/main/presentation/page/single_application_page.dart';
@@ -41,7 +42,11 @@ class AppRouter {
             applicationId: state.pathParameters['id'] ?? '',
           );
         },
-      )
+      ),
+      GoRoute(
+        path: HistoryPage.path,
+        builder: (context, state) => const HistoryPage(),
+      ),
     ],
   );
 }

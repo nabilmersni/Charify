@@ -7,7 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class SplashPage extends StatelessWidget {
-  static const String path = "/splash";
+  static const String path = '/splash';
+
   const SplashPage({super.key});
 
   @override
@@ -18,8 +19,17 @@ class SplashPage extends StatelessWidget {
           context.go(MainPage.path);
         }
       },
-      child: const Scaffold(
-        backgroundColor: AppColors.secondary,
+      child: Scaffold(
+        backgroundColor: AppColors.primary,
+        body: Center(
+          child: Text(
+            'Charify',
+            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                color: AppColors.surface,
+                fontSize: 52,
+                fontWeight: FontWeight.w700),
+          ),
+        ),
       ),
     );
   }

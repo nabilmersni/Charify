@@ -3,6 +3,8 @@ import 'package:charify/core/ui/widgets/default_button.dart';
 import 'package:charify/core/ui/widgets/default_text_field.dart';
 import 'package:charify/features/auth/presentation/bloc/user_bloc.dart';
 import 'package:charify/features/auth/presentation/bloc/user_event.dart';
+import 'package:charify/features/history/presentation/bloc/history_bloc.dart';
+import 'package:charify/features/history/presentation/bloc/history_event.dart';
 import 'package:charify/features/main/presentation/bloc/main_bloc.dart';
 import 'package:charify/features/main/presentation/bloc/main_event.dart';
 import 'package:charify/features/main/presentation/bloc/payment_bloc.dart';
@@ -55,6 +57,9 @@ class _PaymentPageState extends State<PaymentPage> {
             listener: (context, state) {
               if (state.status == PaymentStatus.success) {
                 context.read<UserBloc>().add(GetUserEvent());
+                context.read<HistoryBloc>().add(
+                      LoadDonationsEvent(refresh: true),
+                    );
                 context
                     .read<MainBloc>()
                     .add(LoadApplicationsEvent(refresh: true));

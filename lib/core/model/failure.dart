@@ -19,3 +19,7 @@ class ApplicationFailure extends Failure {
 class PaymentFailure extends Failure {
   PaymentFailure({required super.errorMessage});
 }
+
+class HistoryFailure extends Failure {
+  HistoryFailure({required super.errorMessage});
+}

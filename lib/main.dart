@@ -5,6 +5,8 @@ import 'package:charify/features/auth/presentation/bloc/user_bloc.dart';
 import 'package:charify/features/auth/presentation/bloc/user_event.dart';
 import 'package:charify/features/auth/presentation/bloc/user_state.dart';
 import 'package:charify/features/auth/presentation/page/auth_page.dart';
+import 'package:charify/features/history/presentation/bloc/history_bloc.dart';
+import 'package:charify/features/history/presentation/bloc/history_event.dart';
 import 'package:charify/features/main/presentation/bloc/main_bloc.dart';
 import 'package:charify/features/main/presentation/bloc/payment_bloc.dart';
 import 'package:charify/firebase_options.dart';
@@ -30,6 +32,10 @@ void main() async {
         ),
         BlocProvider(
           create: (context) => getIt<PaymentBloc>(),
+        ),
+        BlocProvider(
+          create: (context) =>
+              getIt<HistoryBloc>()..add(LoadDonationsEvent(refresh: true)),
         ),
       ],
       child: MaterialApp.router(
